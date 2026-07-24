@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Collage, a freeform photo collage maker</title>
+<meta name="description" content="Drop in your photos and arrange them freely on a canvas. No fixed templates.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <div class="wordmark">Collage<span class="dot">.</span></div>
+    <div class="topbar-right">
+      <span class="counter" id="photoCounter">0 photos</span>
+      <button class="btn btn-primary" id="exportBtn">Export PNG</button>
+    </div>
+  </header>
+
+  <div class="workspace">
+
+    <aside class="rail">
+
+      <section class="rail-section">
+        <h2 class="rail-title">Photos</h2>
+        <button class="btn btn-block" id="addPhotosBtn">+ Add photos</button>
+        <input type="file" id="fileInput" accept="image/*" multiple hidden>
+        <p class="rail-hint">Or drag photos onto the canvas</p>
+      </section>
+
+      <section class="rail-section">
+        <h2 class="rail-title">Canvas</h2>
+        <label class="field-label" for="sizePreset">Size</label>
+        <select id="sizePreset" class="select">
+          <option value="square">Square, 1600 x 1600</option>
+          <option value="portrait">Portrait, 1600 x 2000</option>
+          <option value="landscape">Landscape, 1800 x 1200</option>
+          <option value="story">Story, 1080 x 1920</option>
+          <option value="wide">Widescreen, 1920 x 1080</option>
+          <option value="custom">Custom size</option>
+        </select>
+
+        <div class="custom-size" id="customSizeRow" hidden>
+          <input type="number" id="customW" class="input-num" min="200" max="4000" value="1600" aria-label="Width">
+          <span class="x">x</span>
+          <input type="number" id="customH" class="input-num" min="200" max="4000" value="1600" aria-label="Height">
+          <button class="btn btn-small" id="applyCustomSize">Set</button>
+        </div>
+
+        <label class="field-label">Background</label>
+        <div class="bg-row">
+          <input type="color" id="bgColor" value="#faf7f2" aria-label="Background color">
+          <button class="chip" id="bgTransparent" aria-pressed="false">Transparent</button>
+        </div>
+      </section>
+
+      <section class="rail-section">
+        <h2 class="rail-title">Arrange</h2>
+        <button class="btn btn-block btn-primary-outline" id="autoFitBtn">Fit to canvas</button>
+        <label class="field-label">Spacing <span id="spacingVal" class="mono-val">0px</span></label>
+        <input type="range" id="spacingRange" min="0" max="60" value="0">
+        <button class="btn btn-block btn-ghost" id="scatterBtn">Scatter freely</button>
+      </section>
+
+      <section class="rail-section" id="selectionSection" hidden>
+        <h2 class="rail-title">Selected <span id="selCount" class="mono-val">1</span></h2>
+        <div class="btn-row">
+          <button class="btn btn-small" id="frontBtn" title="Bring to front">Front</button>
+          <button class="btn btn-small" id="backBtn" title="Send to back">Back</button>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-small" id="duplicateBtn" title="Duplicate (Ctrl+D)">Duplicate</button>
+          <button class="btn btn-small btn-danger" id="deleteBtn" title="Delete (Del)">Delete</button>
+        </div>
+      </section>
+
+      <div class="rail-spacer"></div>
+      <button class="link-danger" id="clearBtn">Clear canvas</button>
+    </aside>
+
+    <main class="canvas-area" id="canvasArea">
+      <div class="canvas-scaler" id="canvasScaler">
+        <div class="canvas" id="canvas">
+          <div class="empty-state" id="emptyState">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="9" width="24" height="20" rx="2" transform="rotate(-6 4 9)" stroke="currentColor" stroke-width="1.6"/>
+              <rect x="11" y="12" width="24" height="20" rx="2" transform="rotate(5 11 12)" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+            <p>Drop photos here</p>
+            <p class="empty-sub">or click "Add photos" to begin</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
